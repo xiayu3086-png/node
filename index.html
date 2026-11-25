@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>节点导入 - Shadowrocket</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#eef0f3;
+       color:#111;padding:16px 14px calc(28px + env(safe-area-inset-bottom));min-height:100vh}
+  h1{font-size:17px;font-weight:600;text-align:center;margin-bottom:3px}
+  .sub{font-size:12.5px;color:#8a8a8e;text-align:center;margin-bottom:14px}
+  .card{background:#fff;border-radius:16px;padding:16px;margin-bottom:13px;box-shadow:0 1px 10px rgba(0,0,0,.05)}
+  .qrbox{display:flex;justify-content:center;padding:4px}
+  .qrbox svg{width:100%;max-width:min(78vw,340px);height:auto;display:block}
+  .cap{font-size:12.5px;color:#8a8a8e;text-align:center;margin-top:10px;line-height:1.6}
+  .btn{display:block;width:100%;text-align:center;padding:15px;border-radius:13px;font-size:16px;
+       font-weight:500;text-decoration:none;border:none;margin-bottom:10px}
+  .b1{background:#0a7cff;color:#fff}
+  .b2{background:#f0f2f5;color:#111}
+  .b3{background:#fff;color:#0a7cff;border:1.5px solid #0a7cff}
+  .sec-title{font-size:13.5px;font-weight:600;margin-bottom:9px;color:#333}
+  .steps{font-size:13.5px;line-height:2;color:#333;padding-left:20px}
+  .steps b{color:#000}
+  .note{background:#fff8e6;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#8a6d00;line-height:1.8;margin-top:12px}
+  .link{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;word-break:break-all;
+        background:#f5f6f8;border-radius:8px;padding:11px;color:#555;line-height:1.65;margin-top:8px}
+  details{margin-top:10px}
+  summary{font-size:13px;color:#0a7cff;cursor:pointer;padding:5px 0;list-style:none}
+  .toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(20px);
+         background:rgba(0,0,0,.82);color:#fff;padding:11px 20px;border-radius:11px;font-size:14px;
+         opacity:0;transition:.25s;pointer-events:none;z-index:99}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+  <h1>节点导入</h1>
+  <div class="sub">VLESS + Reality · 38.97.249.241</div>
+
+  <div class="card">
+    <div class="qrbox"><?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1820" height="1820" class="segno"><g transform="scale(28)"><path fill="#fff" d="M0 0h65v65h-65z"/><path class="qrline" stroke="#000" d="M6 6.5h7m2 0h1m1 0h2m1 0h1m4 0h1m1 0h4m3 0h1m1 0h4m1 0h2m2 0h1m2 0h1m3 0h7m-53 1h1m5 0h1m1 0h9m1 0h1m3 0h1m2 0h3m1 0h1m4 0h1m2 0h7m2 0h1m5 0h1m-53 1h1m1 0h3m1 0h1m2 0h3m1 0h1m2 0h2m1 0h1m3 0h3m1 0h2m7 0h1m2 0h2m2 0h1m2 0h1m1 0h3m1 0h1m-53 1h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m2 0h5m2 0h1m2 0h1m1 0h1m2 0h1m3 0h2m1 0h1m2 0h2m1 0h1m1 0h1m1 0h3m1 0h1m-53 1h1m1 0h3m1 0h1m2 0h2m1 0h4m3 0h1m2 0h1m1 0h5m1 0h1m4 0h1m3 0h4m3 0h1m1 0h3m1 0h1m-53 1h1m5 0h1m1 0h2m1 0h4m3 0h2m1 0h1m2 0h1m3 0h2m2 0h1m2 0h2m1 0h1m3 0h1m3 0h1m5 0h1m-53 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-44 1h1m1 0h6m3 0h5m3 0h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h3m-45 1h5m1 0h4m2 0h2m1 0h2m1 0h4m1 0h7m4 0h1m1 0h2m1 0h1m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m-52 1h1m3 0h1m2 0h2m1 0h2m2 0h1m2 0h1m4 0h5m2 0h2m2 0h1m6 0h1m1 0h2m4 0h3m1 0h1m-51 1h6m2 0h2m4 0h1m2 0h1m1 0h2m2 0h1m5 0h1m1 0h3m1 0h2m2 0h1m3 0h4m1 0h1m-51 1h1m2 0h3m2 0h3m3 0h2m1 0h3m1 0h1m1 0h3m4 0h1m1 0h4m1 0h2m3 0h2m2 0h1m2 0h1m2 0h1m-51 1h3m1 0h1m1 0h1m3 0h2m2 0h3m1 0h1m2 0h2m1 0h1m3 0h2m4 0h2m3 0h1m1 0h2m1 0h3m1 0h2m-52 1h1m7 0h1m1 0h1m3 0h1m4 0h1m2 0h2m1 0h6m6 0h1m3 0h2m5 0h1m2 0h2m-53 1h1m1 0h2m1 0h3m5 0h1m1 0h1m1 0h2m1 0h1m2 0h1m1 0h2m2 0h1m2 0h3m1 0h2m2 0h1m4 0h2m2 0h2m-51 1h1m2 0h2m2 0h6m5 0h2m1 0h1m1 0h3m2 0h5m1 0h1m2 0h1m2 0h3m2 0h1m6 0h1m-50 1h1m2 0h1m2 0h1m3 0h1m1 0h2m1 0h4m1 0h1m1 0h1m2 0h3m2 0h2m1 0h1m1 0h2m1 0h1m1 0h2m2 0h5m-52 1h5m3 0h2m1 0h2m1 0h2m6 0h2m1 0h3m1 0h2m2 0h1m2 0h1m2 0h2m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m-52 1h3m2 0h1m4 0h3m1 0h1m1 0h1m2 0h1m2 0h1m2 0h1m4 0h1m2 0h1m2 0h2m2 0h1m1 0h1m2 0h1m1 0h2m-50 1h2m3 0h1m1 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m2 0h4m3 0h1m1 0h2m1 0h1m2 0h2m1 0h1m-46 1h4m1 0h1m2 0h1m1 0h3m2 0h5m3 0h1m1 0h1m3 0h2m1 0h1m1 0h5m2 0h3m1 0h5m-51 1h2m1 0h3m3 0h2m1 0h1m1 0h1m4 0h1m1 0h5m1 0h2m1 0h2m4 0h1m3 0h4m1 0h1m1 0h2m1 0h1m1 0h1m-52 1h2m1 0h4m1 0h5m3 0h3m5 0h2m2 0h1m1 0h1m1 0h1m3 0h5m2 0h3m1 0h1m1 0h1m-50 1h1m5 0h1m1 0h1m1 0h3m1 0h2m2 0h2m1 0h4m3 0h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m3 0h2m-52 1h2m1 0h5m7 0h6m2 0h5m4 0h2m1 0h1m2 0h1m1 0h2m1 0h5m1 0h1m-51 1h1m3 0h1m3 0h2m1 0h1m1 0h2m2 0h1m4 0h1m1 0h1m3 0h3m1 0h2m1 0h1m3 0h1m2 0h3m3 0h5m-53 1h1m2 0h2m1 0h1m1 0h2m1 0h2m3 0h2m1 0h1m2 0h3m1 0h1m1 0h1m3 0h1m1 0h1m1 0h3m5 0h1m1 0h1m1 0h2m-50 1h1m3 0h1m3 0h3m2 0h1m1 0h1m5 0h1m1 0h2m3 0h1m1 0h2m2 0h2m1 0h1m1 0h2m1 0h1m1 0h1m3 0h2m1 0h1m-52 1h3m1 0h7m1 0h2m1 0h2m1 0h1m1 0h1m3 0h6m1 0h1m1 0h6m5 0h7m1 0h1m-49 1h1m2 0h2m2 0h1m2 0h1m7 0h2m2 0h6m5 0h1m1 0h4m5 0h5m-49 1h3m1 0h1m1 0h3m2 0h4m6 0h2m3 0h1m2 0h1m2 0h1m1 0h2m3 0h1m1 0h1m1 0h5m-52 1h2m3 0h1m1 0h7m1 0h1m2 0h1m1 0h1m3 0h3m3 0h3m2 0h1m1 0h1m2 0h2m1 0h6m-48 1h2m1 0h1m1 0h4m2 0h1m2 0h7m1 0h3m1 0h3m3 0h1m2 0h2m1 0h1m1 0h2m3 0h1m3 0h3m-48 1h1m1 0h1m2 0h1m6 0h1m4 0h2m2 0h2m1 0h3m1 0h1m2 0h2m4 0h8m1 0h2m-53 1h1m2 0h1m1 0h2m3 0h6m1 0h2m2 0h1m2 0h6m4 0h1m1 0h1m1 0h1m1 0h2m2 0h1m2 0h4m-51 1h4m1 0h1m2 0h5m9 0h2m5 0h2m5 0h1m1 0h4m1 0h1m1 0h2m2 0h1m1 0h2m-53 1h2m2 0h1m1 0h3m1 0h4m2 0h6m2 0h2m1 0h1m2 0h2m1 0h1m1 0h2m1 0h1m2 0h1m2 0h1m1 0h2m1 0h2m-51 1h1m1 0h1m6 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m2 0h1m3 0h1m1 0h1m4 0h1m1 0h1m1 0h2m5 0h3m1 0h1m-53 1h5m1 0h5m9 0h1m4 0h2m2 0h1m6 0h1m1 0h2m5 0h1m3 0h2m-49 1h1m1 0h2m2 0h1m2 0h2m4 0h2m2 0h1m1 0h2m1 0h1m3 0h5m1 0h2m1 0h2m2 0h1m2 0h4m1 0h1m-52 1h1m1 0h1m2 0h2m4 0h2m3 0h6m2 0h2m1 0h1m7 0h2m1 0h2m1 0h2m1 0h2m1 0h1m2 0h1m-51 1h1m2 0h1m1 0h1m4 0h1m1 0h1m4 0h1m4 0h2m2 0h1m2 0h2m2 0h1m5 0h1m2 0h1m1 0h1m1 0h4m2 0h1m-53 1h2m1 0h4m1 0h4m1 0h1m4 0h3m1 0h1m1 0h1m3 0h2m1 0h1m1 0h2m1 0h6m1 0h1m5 0h2m-50 1h2m4 0h1m2 0h1m2 0h2m1 0h2m1 0h1m3 0h1m1 0h2m4 0h1m1 0h3m1 0h2m1 0h2m1 0h5m1 0h1m-47 1h1m2 0h3m2 0h1m1 0h2m1 0h5m3 0h8m4 0h2m3 0h2m1 0h7m-43 1h2m2 0h3m4 0h1m2 0h3m3 0h3m2 0h1m1 0h1m1 0h1m1 0h6m3 0h2m2 0h1m-53 1h7m1 0h1m1 0h5m1 0h1m1 0h1m4 0h2m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m5 0h1m1 0h1m1 0h1m-49 1h1m5 0h1m2 0h3m1 0h3m2 0h1m4 0h2m3 0h1m2 0h2m1 0h1m2 0h1m2 0h3m1 0h1m3 0h1m-49 1h1m1 0h3m1 0h1m1 0h7m1 0h5m3 0h7m2 0h4m2 0h1m1 0h1m2 0h9m-53 1h1m1 0h3m1 0h1m1 0h2m3 0h3m5 0h2m4 0h1m1 0h2m1 0h2m1 0h2m3 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h2m-53 1h1m1 0h3m1 0h1m1 0h1m1 0h2m5 0h2m1 0h2m1 0h2m1 0h2m1 0h1m4 0h1m2 0h2m2 0h1m1 0h1m1 0h2m1 0h3m1 0h1m-53 1h1m5 0h1m1 0h1m1 0h4m3 0h2m2 0h2m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h6m3 0h1m2 0h1m-52 1h7m1 0h6m1 0h6m3 0h2m3 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h6m3 0h1"/></g></svg>
+</div>
+    <div class="cap">Shadowrocket → 右上角 ＋ → 扫一扫<br>距离保持 15–25cm，屏幕调亮</div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title">最可靠的两种方式</div>
+    <a class="btn b1" href="shadowrocket://add/vless://d8651da1-2aa8-4a71-9778-46789645f49b@38.97.249.241:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.yahoo.com&fp=chrome&pbk=Vb-_7jmf32Bxr7EYdNDY6XRAUXhJ0t3D9oDRWESoWlc&sid=fb47545b701654b4&type=tcp#node1">① 一键导入到 Shadowrocket</a>
+    <button class="btn b3" onclick="copyLink()">② 复制节点链接</button>
+    <div class="steps">
+      <b>方式①</b>：点按钮会跳到 Shadowrocket，自动添加节点<br>
+      <b>方式②</b>：复制后打开 Shadowrocket → 右上 ＋ → 从剪贴板导入
+    </div>
+    <details>
+      <summary>▼ 查看节点链接原文</summary>
+      <div class="link" id="linkText">vless://d8651da1-2aa8-4a71-9778-46789645f49b@38.97.249.241:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.yahoo.com&fp=chrome&pbk=Vb-_7jmf32Bxr7EYdNDY6XRAUXhJ0t3D9oDRWESoWlc&sid=fb47545b701654b4&type=tcp#node1</div>
+    </details>
+  </div>
+
+  <div class="card">
+    <div class="sec-title">手动填写（扫码、导入都失败时）</div>
+    <div class="steps">
+      Shadowrocket → 右上 ＋ → <b>添加节点</b><br>
+      类型：<b>VLESS</b><br>
+      地址：<b>38.97.249.241</b>　端口：<b>443</b><br>
+      UUID：<b>d8651da1-2aa8-4a71-9778-46789645f49b</b><br>
+      传输：<b>TCP</b>　加密：<b>none</b><br>
+      流控 Flow：<b>xtls-rprx-vision</b><br>
+      TLS：<b>开启</b>　安全类型：<b>reality</b><br>
+      SNI：<b>www.yahoo.com</b>　指纹：<b>chrome</b><br>
+      公钥：<b>Vb-_7jmf32Bxr7EYdNDY6XRAUXhJ0t3D9oDRWESoWlc</b><br>
+      Short ID：<b>fb47545b701654b4</b>
+    </div>
+    <div class="note">
+      手动填写时最容易错的是 <b>公钥</b> 和 <b>Short ID</b>，注意区分大小写和连字符，不要有空格。
+    </div>
+  </div>
+  <div class="toast" id="toast">已复制</div>
+
+<script>
+function copyLink(){
+  var t = document.getElementById('linkText').innerText.trim();
+  var ta = document.createElement('textarea');
+  ta.value = t; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); showToast('链接已复制'); }
+  catch(e){ showToast('复制失败，请长按链接手动复制'); }
+  document.body.removeChild(ta);
+}
+function showToast(msg){
+  var el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(function(){ el.classList.remove('show'); }, 1800);
+}
+</script>
+</body>
+</html>
