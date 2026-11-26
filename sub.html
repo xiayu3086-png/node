@@ -61,6 +61,19 @@
   </div>
 
   <div class="card">
+  <div class="card">
+    <h3>必须先做这两步<span>否则一定连不上</span></h3>
+    <ol class="steps">
+      <li><b>把 Shadowrocket 里所有旧节点、舊订阅全部删掉</b><br>
+          <span style="color:#8a8a8e;font-size:12.5px">截图里的 node1-client1@node.com 是旧的坏节点，带了手机不认识的
+          support-x25519mlkem768 参数，会弹「服务器 URL 遇到问题」</span></li>
+      <li>加完新节点后，<b>点一下节点名字本身</b>，让它变成选中状态（深色）</li>
+    </ol>
+    <div class="tip">
+      <b>全局路由</b>保持「代理」即可（你截图里已经是对的）。<br>
+      如果加了新节点还是没网，先把旧的全删干净再试——旧的坏节点会抢在选中状态上。
+    </div>
+  </div>
     <h3>先诊断，再导入<span>推荐第一步</span></h3>
     <div style="font-size:13.5px;line-height:1.95;color:#333;margin-bottom:11px">
       打开下面页面，点「开始检测」，它会实时告诉你
@@ -70,10 +83,12 @@
   </div>
 
   <div class="card">
-    <h3>扫这个二维码<span>纯净订阅，好扫</span></h3>
+    <h3>扫这个二维码<span>25×25，极稀疏</span></h3>
     <div class="qrbox" id="qrbox">
             <?xml version="1.0" encoding="utf-8"?>
-      <svg xmlns="http://www.w3.org/2000/svg" width="1110" height="1110" class="segno"><g transform="scale(30)"><path fill="#fff" d="M0 0h37v37h-37z"/><path class="qrline" stroke="#000" d="M6 6.5h7m1 0h1m3 0h2m1 0h1m2 0h7m-25 1h1m5 0h1m1 0h1m3 0h1m1 0h1m3 0h1m5 0h1m-25 1h1m1 0h3m1 0h1m1 0h3m7 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m1 0h4m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-25 1h1m5 0h1m1 0h3m2 0h1m2 0h1m1 0h1m5 0h1m-25 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-15 1h3m2 0h2m-17 1h2m2 0h3m3 0h1m3 0h3m2 0h1m1 0h4m-23 1h1m1 0h2m1 0h2m2 0h1m1 0h1m1 0h1m3 0h3m1 0h1m-20 1h1m1 0h1m2 0h4m2 0h2m1 0h1m2 0h2m-23 1h5m2 0h3m4 0h2m1 0h2m1 0h1m1 0h2m-23 1h4m1 0h1m7 0h1m1 0h1m1 0h1m2 0h4m-25 1h1m1 0h1m6 0h3m3 0h1m1 0h1m1 0h2m2 0h1m-22 1h1m1 0h1m1 0h3m1 0h4m1 0h8m-21 1h2m1 0h1m3 0h2m1 0h1m3 0h1m4 0h3m-24 1h3m3 0h2m3 0h2m1 0h1m1 0h7m-15 1h5m2 0h2m3 0h1m1 0h1m-23 1h7m2 0h1m1 0h2m3 0h1m1 0h1m1 0h2m-22 1h1m5 0h1m1 0h3m4 0h2m3 0h3m-23 1h1m1 0h3m1 0h1m1 0h1m5 0h1m1 0h5m1 0h2m-24 1h1m1 0h3m1 0h1m4 0h3m2 0h1m1 0h1m2 0h4m-25 1h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m3 0h1m4 0h1m-24 1h1m5 0h1m1 0h1m1 0h3m2 0h1m3 0h5m-24 1h7m1 0h1m1 0h1m3 0h1m2 0h1m4 0h3"/></g></svg>
+            <?xml version="1.0" encoding="utf-8"?>
+      <svg xmlns="http://www.w3.org/2000/svg" width="1804" height="1804" class="segno"><g transform="scale(44)"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M8 8.5h7m1 0h1m3 0h2m1 0h1m2 0h7m-25 1h1m5 0h1m1 0h1m3 0h1m1 0h1m3 0h1m5 0h1m-25 1h1m1 0h3m1 0h1m1 0h3m7 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m1 0h4m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-25 1h1m5 0h1m1 0h3m2 0h1m2 0h1m1 0h1m5 0h1m-25 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-15 1h3m2 0h2m-17 1h2m2 0h3m3 0h1m3 0h3m2 0h1m1 0h4m-23 1h1m1 0h2m1 0h2m2 0h1m1 0h1m1 0h1m3 0h3m1 0h1m-20 1h1m1 0h1m2 0h4m2 0h2m1 0h1m2 0h2m-23 1h5m2 0h3m4 0h2m1 0h2m1 0h1m1 0h2m-23 1h4m1 0h1m7 0h1m1 0h1m1 0h1m2 0h4m-25 1h1m1 0h1m6 0h3m3 0h1m1 0h1m1 0h2m2 0h1m-22 1h1m1 0h1m1 0h3m1 0h4m1 0h8m-21 1h2m1 0h1m3 0h2m1 0h1m3 0h1m4 0h3m-24 1h3m3 0h2m3 0h2m1 0h1m1 0h7m-15 1h5m2 0h2m3 0h1m1 0h1m-23 1h7m2 0h1m1 0h2m3 0h1m1 0h1m1 0h2m-22 1h1m5 0h1m1 0h3m4 0h2m3 0h3m-23 1h1m1 0h3m1 0h1m1 0h1m5 0h1m1 0h5m1 0h2m-24 1h1m1 0h3m1 0h1m4 0h3m2 0h1m1 0h1m2 0h4m-25 1h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m3 0h1m4 0h1m-24 1h1m5 0h1m1 0h1m1 0h3m2 0h1m3 0h5m-24 1h7m1 0h1m1 0h1m3 0h1m2 0h1m4 0h3"/></g></svg>
+      
       
     </div>
     <div class="cap">Shadowrocket → 右上角 ＋ → 扫一扫</div>
