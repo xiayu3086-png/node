@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>节点诊断 - Shadowrocket</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#eef0f3;color:#111;
+       padding:18px 14px calc(34px + env(safe-area-inset-bottom));min-height:100vh}
+  h1{font-size:19px;font-weight:600;text-align:center;margin-bottom:5px}
+  .sub{font-size:12.5px;color:#8a8a8e;text-align:center;margin-bottom:16px}
+
+  .card{background:#fff;border-radius:16px;padding:16px;margin-bottom:13px;box-shadow:0 1px 10px rgba(0,0,0,.05)}
+  .card h3{font-size:14.5px;font-weight:600;margin-bottom:11px;color:#222}
+  .card h3 span{font-weight:400;font-size:12px;color:#8a8a8e;margin-left:6px}
+
+  .row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;
+       border-bottom:1px solid #f0f1f4;font-size:13.5px}
+  .row:last-child{border-bottom:none}
+  .row .k{color:#555;flex:1;padding-right:10px}
+  .row .v{font-weight:600;text-align:right;font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
+  .ok{color:#12a150}.fail{color:#e5484d}.wait{color:#f5a524}
+
+  .big{text-align:center;padding:18px 10px;border-radius:12px;background:#f7f8fa;margin-bottom:11px}
+  .big .n{font-size:34px;font-weight:700;line-height:1.15}
+  .big .d{font-size:12.5px;color:#8a8a8e;margin-top:5px}
+
+  .btn{display:block;width:100%;text-align:center;padding:15px;border-radius:12px;font-size:16px;
+       font-weight:600;border:none;background:#0a7cff;color:#fff;font-family:inherit;margin-top:4px}
+  .btn.ghost{background:#f0f2f5;color:#111;font-weight:500;font-size:14.5px}
+  .url{background:#f7f8fa;border-radius:8px;padding:11px;font-family:ui-monospace,Menlo,monospace;
+       font-size:10.5px;word-break:break-all;line-height:1.6;color:#333;margin-top:9px}
+  .hint{font-size:12px;color:#8a8a8e;line-height:1.85;margin-top:10px;
+        background:#f7f8fa;border-radius:9px;padding:11px 12px}
+  .hint b{color:#333}
+  .steps{font-size:13.5px;line-height:2.05;color:#333;padding-left:20px}
+  .steps b{color:#000;font-weight:600}
+  .toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(18px);
+         background:rgba(0,0,0,.85);color:#fff;padding:11px 20px;border-radius:11px;font-size:14px;
+         opacity:0;transition:.25s;pointer-events:none;z-index:99;white-space:nowrap}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+  <h1>节点诊断</h1>
+  <div class="sub">先看诊断结果，再决定怎么导</div>
+
+  <div class="card">
+    <h3>实时检测<span>点下面按钮</span></h3>
+    <div class="big">
+      <div class="n" id="state">未检测</div>
+      <div class="d" id="stated">点击按钮开始</div>
+    </div>
+    <div id="rows"></div>
+    <button class="btn" id="runBtn" onclick="run()">开始检测</button>
+  </div>
+
+  <div class="card">
+    <h3>方案一：订阅导入<span>最推荐</span></h3>
+    <ol class="steps">
+      <li>先把 Shadowrocket 里<b>旧的节点全部删掉</b></li>
+      <li>右上角 <b>＋</b> → 类型选 <b>Subscribe</b></li>
+      <li>粘贴下面这个链接到 <b>URL</b> 栏</li>
+      <li>点右上角 <b>Done</b>，等几秒</li>
+      <li>节点列表出现 <b>node1-client1@node.com</b> 就是成功了</li>
+      <li>点它右侧 <b>ⓘ</b> 手动更新一次</li>
+    </ol>
+    <div class="url" id="subText">http://38.97.249.241:2096/0dc6s29u61qsphfg/7fe78882af2b997599cf0d1b82164ccb</div>
+    <button class="btn ghost" onclick="cp(document.getElementById('subText').innerText,'订阅链接已复制')">复制订阅链接</button>
+  </div>
+
+  <div class="card">
+    <h3>方案二：单个节点<span>不靠订阅</span></h3>
+    <ol class="steps">
+      <li>Shadowrocket 右上角 <b>＋</b> → 类型选 <b>Subscribe</b></li>
+      <li>在 <b>URL</b> 栏粘贴下面的 vless 链接</li>
+      <li>点 <b>Done</b>，同样会变成一个节点</li>
+    </ol>
+    <div class="url" id="nodeText">vless://d8651da1-2aa8-4a71-9778-46789645f49b@38.97.249.241:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.yahoo.com&pbk=Vb-_7jmf32Bxr7EYdNDY6XRAUXhJ0t3D9oDRWESoWlc&sid=fb47545b701654b4&type=tcp#node1</div>
+    <button class="btn ghost" onclick="cp(document.getElementById('nodeText').innerText,'节点链接已复制')">复制节点链接</button>
+    <div class="hint">这条链接<b>不含任何多余参数</b>，只有 Reality 必需的字段。如果订阅导入有问题，就用这条。</div>
+  </div>
+
+  <div class="card">
+    <h3>导入成功后必做的两步</h3>
+    <ol class="steps">
+      <li>点节点名字左边，把它<b>设为选中状态</b>（变成深色）</li>
+      <li>右上角打开<b>全局路由开关</b>，或确认路由模式是 <b>全局代理</b></li>
+    </ol>
+    <div class="hint">很多人卡在这里：节点加进去了、开关也开了，但路由模式还是「配置」，于是国内网站走直连、国外网站走代理，看起来就像"连上了但没网"。</div>
+  </div>
+
+  <div class="toast" id="toast">已复制</div>
+
+<script>
+var SUB  = "http://38.97.249.241:2096/0dc6s29u61qsphfg/7fe78882af2b997599cf0d1b82164ccb";
+var NODE = "vless://d8651da1-2aa8-4a71-9778-46789645f49b@38.97.249.241:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.yahoo.com&pbk=Vb-_7jmf32Bxr7EYdNDY6XRAUXhJ0t3D9oDRWESoWlc&sid=fb47545b701654b4&type=tcp#node1";
+
+function cp(text, msg){
+  var ta=document.createElement('textarea');
+  ta.value=text; ta.style.position='fixed'; ta.style.top='0'; ta.style.opacity='0';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select(); ta.setSelectionRange(0, text.length);
+  var ok=false;
+  try{ ok=document.execCommand('copy'); }catch(e){ ok=false; }
+  document.body.removeChild(ta);
+  if(!ok && navigator.clipboard){
+    navigator.clipboard.writeText(text).then(function(){ toast(msg); },
+      function(){ toast('复制失败，请长按手动复制'); });
+    return;
+  }
+  toast(ok ? msg : '复制失败，请长按手动复制');
+}
+function toast(m){
+  var el=document.getElementById('toast');
+  el.textContent=m; el.classList.add('show');
+  clearTimeout(el._t);
+  el._t=setTimeout(function(){ el.classList.remove('show'); }, 1800);
+}
+
+var rowsEl=document.getElementById('rows');
+function setRow(k, val, cls){
+  var r=document.createElement('div'); r.className='row';
+  var a=document.createElement('div'); a.className='k'; a.textContent=k;
+  var b=document.createElement('div'); b.className='v '+cls; b.textContent=val;
+  r.appendChild(a); r.appendChild(b); rowsEl.appendChild(r);
+}
+function clearRows(){ rowsEl.innerHTML=''; }
+function state(n,d,cls){ 
+  var s=document.getElementById('state'); s.textContent=n; s.className='n '+cls;
+  document.getElementById('stated').textContent=d;
+}
+
+function run(){
+  clearRows();
+  state('检测中…','正在测速', 'wait');
+  var t0=performance.now();
+  var done=false;
+
+  // 测试1: TCP 能否连到 VPS 443
+  var t1=performance.now();
+  fetch('https://38.97.249.241:443/', {mode:'no-cors', cache:'no-store'})
+    .then(function(){ addRow('TCP 443 直连', Math.round(performance.now()-t1)+' ms', 'ok'); })
+    .catch(function(e){ addRow('TCP 443 直连', '连不上', 'fail'); });
+
+  // 测试2: 走代理访问 Google
+  var t2=performance.now();
+  fetch('https://www.google.com/generate_204', {mode:'no-cors', cache:'no-store'})
+    .then(function(){
+      addRow('Google 204', Math.round(performance.now()-t2)+' ms', 'ok');
+      finish();
+    })
+    .catch(function(){
+      addRow('Google 204', '超时/失败', 'fail');
+      finish();
+    });
+
+  setTimeout(function(){ if(!done){ addRow('整体耗时', '> 12s 超时', 'fail'); finish(true); } }, 12000);
+}
+
+var finished=false;
+function finish(timeout){
+  if(finished) return; finished=true; done=true;
+  var fails=document.querySelectorAll('#rows .v.fail').length;
+  if(timeout){ state('超时','检测超时', 'fail'); }
+  else if(fails>0){ state('未连通','有项目失败', 'fail'); }
+  else { state('已连通','一切正常', 'ok'); }
+}
+function addRow(k,v,c){ setRow(k,v,c); }
+
+// 允许重复运行
+document.getElementById('runBtn').addEventListener('click', function(){
+  finished=false; done=false; run();
+});
+</script>
+</body>
+</html>
